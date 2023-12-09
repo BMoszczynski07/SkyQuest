@@ -1,4 +1,4 @@
-package com.example.lotycrud.Models;
+package com.example.lotycrud.Models.User;
 
 public class UserDataDTO {
     public String login;
