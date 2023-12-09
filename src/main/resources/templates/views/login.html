@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SkyQuest &bull; login</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}" />
+    <link rel="stylesheet" th:href="@{/styles/userdata.css}"" />
+
+    <script th:src="@{/scripts/script.js}" defer></script>
+  </head>
+  <body>
+    <main>
+      <div class="login">
+        <div class="login__container">
+          <header class="login__header">
+            <h1 class="login__logo">
+              Sky<span class="login__logo-text--bright">Quest </span>
+            </h1>
+          </header>
+          <form
+            action="http://127.0.0.1:8000/api/login"
+            method="POST"
+            class="login__form"
+          >
+            <div class="login__field">
+              <label for="login" class="login__label">Login</label>
+              <input type="text" id="login" name="login" class="login__input" />
+            </div>
+            <div class="login__field" data-field="pass">
+              <label for="pass" class="login__label">Hasło</label>
+              <input
+                type="password"
+                id="pass"
+                name="pass"
+                class="login__input"
+              />
+            </div>
+            <span class="login__register"
+              >Nie masz konta?
+              <a href="./register.html" class="login__register-a"
+                >Zarejestruj się</a
+              >
+            </span>
+            <button type="submit" class="login__submit-btn">Zaloguj się</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://kit.fontawesome.com/f4c4b4acfc.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

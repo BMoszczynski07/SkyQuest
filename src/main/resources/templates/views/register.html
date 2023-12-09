@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SkyQuest &bull; register</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}" />
+    <link rel="stylesheet" th:href="@{/styles/userdata.css}"" />
+
+    <script th:src="@{/scripts/script.js}" defer></script>
+
+    <style>
+      .login__form {
+        overflow-y: scroll;
+        max-height: 250px;
+        padding-right: 5px;
+      }
+
+      /* width */
+      ::-webkit-scrollbar {
+        width: 2px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #d6d6d6;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #a2a2a2;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #848484;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="login">
+        <div class="login__container">
+          <header class="login__header">
+            <h1 class="login__logo">
+              Sky<span class="login__logo-text--bright">Quest</span>
+            </h1>
+          </header>
+          <form
+            action="http://127.0.0.1:8000/api/register"
+            method="POST"
+            class="login__form"
+          >
+            <div class="login__field">
+              <label for="firstname" class="login__label">Imię</label>
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                class="login__input"
+              />
+            </div>
+            <div class="login__field">
+              <label for="lastname" class="login__label">Nazwisko</label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                class="login__input"
+              />
+            </div>
+            <div class="login__field">
+              <label for="username" class="login__label"
+                >Nazwa użytkownika</label
+              >
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="login__input"
+              />
+            </div>
+            <div class="login__field">
+              <label for="email" class="login__label">E-mail</label>
+              <input type="text" name="email" id="email" class="login__input" />
+            </div>
+            <div class="login__field" data-field="pass">
+              <label for="pass" class="login__label">Hasło</label>
+              <input
+                type="password"
+                name="pass"
+                id="pass"
+                class="login__input"
+              />
+            </div>
+            <div class="login__field" data-field="passconfirm">
+              <label for="passconfirm" class="login__label"
+                >Potwierdź hasło</label
+              >
+              <input
+                type="password"
+                name="passconfirm"
+                id="passconfirm"
+                class="login__input"
+              />
+            </div>
+            <span class="login__register"
+              >Masz już konto?
+              <a href="./login.html" class="login__register-a">Zaloguj się</a>
+            </span>
+            <button type="submit" class="login__submit-btn">
+              Zarejestruj się
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://kit.fontawesome.com/f4c4b4acfc.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

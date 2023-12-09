@@ -1,0 +1,228 @@
+@keyframes passModal {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+body {
+  background-image: url("../assets/planes.jpg");
+  background-size: 400px;
+  backdrop-filter: brightness(60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  position: relative;
+}
+
+.login__container {
+  position: relative;
+  width: 265px;
+  height: 420px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: var(--colorTwo);
+}
+
+.login__logo {
+  padding-top: 12px;
+  font-size: 28px;
+  font-family: "DM Sans", sans-serif;
+  display: flex;
+  position: relative;
+}
+
+.login__logo::after {
+  content: "Make flights great again";
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  color: var(--slogan-color);
+}
+
+.login__logo-text--bright {
+  color: var(--colorOne);
+}
+
+.login__submit-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-size: 15px;
+  padding: 6px;
+  width: calc(100% - 16px);
+  outline: none;
+  border: none;
+  background: var(--colorBtn);
+  color: var(--colorOne);
+  border-radius: 5px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.login__submit-btn:hover {
+  background: var(--colorBtnHover);
+}
+
+.login__form {
+  margin-top: 40px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.15px;
+  color: var(--textColor);
+  display: flex;
+  flex-direction: column;
+}
+
+.login__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.login__label {
+  font-size: 13px;
+  letter-spacing: -0.1px;
+
+  color: var(--fieldColor);
+}
+
+.login__input {
+  background: var(--colorTwo);
+  outline: none;
+  padding: 6px 2px;
+  border-radius: 8px;
+  border: 2px solid var(--fieldColor);
+  color: var(--textColor);
+  font-family: "DM Sans", sans-serif;
+  letter-spacing: -0.3px;
+  font-size: 15px;
+  font-weight: 700;
+  padding-left: 4px;
+}
+
+.login__input:focus {
+  border: 2px solid var(--colorOne);
+  transition: 0.1s;
+}
+
+.login__field:focus-within .login__label {
+  color: var(--colorOne);
+  transition: 0.1s;
+}
+
+.login__register {
+  text-align: center;
+  color: var(--textColor);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.login__register-a {
+  color: var(--colorOne);
+}
+
+.login__register-a:hover {
+  transition: 0.1s;
+  color: var(--colorOneHover);
+}
+
+.login__pass-conditions {
+  position: relative;
+  background: var(--colorBtn);
+  border-radius: 8px;
+  list-style-type: none;
+  margin: 8px 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  animation: passModal 0.2s forwards;
+}
+
+.login__pass-condition {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 8px;
+  margin-left: 14px;
+  color: var(--colorOne);
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  font-size: 13px;
+}
+
+.login__pass-conditions::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--colorOne);
+}
+
+.login__pass-fa {
+  margin-right: 5px;
+}
+
+/* <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SkyQuest &bull; login</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../styles/login.css" />
+  </head>
+  <body>
+    <main>
+      <div class="login">
+        <div class="login__container">
+          <header class="login__header">
+            <h1 class="login__logo">
+              <span class="login__logo">Sky</span>
+              <span class="login__logo--bright">Quest</span>
+            </h1>
+          </header>
+          <form
+            action="127.0.0.1:8001/api/login"
+            method="POST"
+            class="login__form"
+          >
+            <div class="login__field">
+              <label for="login" class="login__label">Login</label>
+              <input type="text" id="login" class="login__input" />
+            </div>
+            <div class="login__field">
+              <label for="pass" class="login__label">Hasło</label>
+              <input type="password" id="pass" class="login__input" />
+            </div>
+            <span class="login__register"
+              >Nie masz konta?
+              <a
+                href="127.0.0.1:8001/api/view/register"
+                class="login__register-a"
+                >Zarejestruj się</a
+              >
+            </span>
+            <button type="submit" class="login__submit-btn">Zaloguj się</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html> */
