@@ -6,5 +6,4 @@ public class UserDataDTO {
     public String email;
     public String firstname;
     public String lastname;
-    public String nickname;
 }

@@ -12,4 +12,6 @@ public class UserBuilder {
     private String nickname;
     private int roleId;
     private String pass;
+    private String passPlain;
+    private String email;
 }
