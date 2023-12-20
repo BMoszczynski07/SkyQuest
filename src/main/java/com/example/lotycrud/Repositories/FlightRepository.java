@@ -22,9 +22,24 @@ public class FlightRepository {
         return jdbc.query(sql, new Object[]{UserId, FlightId}, new FlightRowMapper());
     }
 
-    public void saveFlight(SaveFlightBuilder newFlight) {
+    public boolean isUserExists(int UserId) {
+        String sql = "SELECT COUNT(*) FROM user WHERE Id = ?";
+        int count = jdbc.queryForObject(sql, Integer.class, UserId);
+        return count > 0;
+    }
+
+    public boolean saveFlight(SaveFlightBuilder newFlight) {
+        if (!isUserExists(newFlight.getUserId())) {
+            throw new RuntimeException("Użytkownik o podanym id nie istnieje!");
+        }
+
         String sql = "INSERT INTO savedflights (UserId, FlightId) VALUES (?, ?)";
 
-        jdbc.update(sql, newFlight.getUserId(), newFlight.getFlightId());
+        try {
+            jdbc.update(sql, newFlight.getUserId(), newFlight.getFlightId());
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException("Wystąpił problem podczas zapisu lotu: " + e.getMessage());
+        }
     }
 }
