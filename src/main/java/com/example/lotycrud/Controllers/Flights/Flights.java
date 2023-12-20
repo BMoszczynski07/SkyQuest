@@ -1,7 +1,7 @@
 package com.example.lotycrud.Controllers.Flights;
 import com.example.lotycrud.Builders.SaveFlightBuilder;
 import com.example.lotycrud.Models.Response.ResponseDTO;
-import com.example.lotycrud.Repositories.JdbcRepository;
+import com.example.lotycrud.Repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @RestController
 public class Flights {
-    private final JdbcRepository jdbc;
+    private final FlightRepository jdbc;
 
     @Autowired
-    public Flights(JdbcRepository jdbc) {
+    public Flights(FlightRepository jdbc) {
         this.jdbc = jdbc;
     }
 

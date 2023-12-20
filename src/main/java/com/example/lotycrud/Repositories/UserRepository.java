@@ -27,16 +27,4 @@ public class UserRepository {
         String sql = "INSERT INTO user (Email, Name, LastName, NickName, RoleId, Pass, PassPlain) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbc.update(sql, newUser.getEmail(), newUser.getName(), newUser.getLastname(), newUser.getNickname(), newUser.getRoleId(), newUser.getPass(), newUser.getPassPlain());
     }
-
-    public List<SaveFlightBuilder> findSavedFlight(int UserId, int FlightId) {
-        String sql = "SELECT * FROM savedflights WHERE UserId = ? AND FlightId = ?";
-
-        return jdbc.query(sql, new Object[]{UserId, FlightId}, new FlightRowMapper());
-    }
-
-    public void saveFlight(SaveFlightBuilder newFlight) {
-        String sql = "INSERT INTO savedflights (UserId, FlightId) VALUES (?, ?)";
-
-        jdbc.update(sql, newFlight.getUserId(), newFlight.getFlightId());
-    }
 }
