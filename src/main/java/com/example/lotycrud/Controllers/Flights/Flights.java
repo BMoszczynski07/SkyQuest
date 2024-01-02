@@ -23,8 +23,6 @@ public class Flights {
     @GetMapping("/api/get-flight/{departureDateTime}/{arriveDateTime}/{departureAirport}/{arriveAirport}")
     public ResponseDTO getFlight(@PathVariable String departureDateTime, @PathVariable String arriveDateTime, @PathVariable String departureAirport, @PathVariable String arriveAirport) {
         try {
-            System.out.println(departureDateTime + " " + arriveDateTime + " " + departureAirport + " " + arriveAirport);
-
             List<FlightBuilder> selectedFlights = jdbc.findFlight(departureDateTime, arriveDateTime, departureAirport, arriveAirport);
 
             if (selectedFlights.size() == 0) return new ResponseDTO<String>(404, "Lotów nie znaleziono");

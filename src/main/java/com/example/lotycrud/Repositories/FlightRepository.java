@@ -18,20 +18,20 @@ public class FlightRepository {
     }
 
     public List<FlightBuilder> findFlight(String departureDateTime, String arriveDateTime, String airportDeparture, String airportArrive) {
-        String sql = "SELECT F.Id AS Id, A1.Name AS ArriveAirportName, A1.airportSign AS ArriveAirportSign, " +
-                "F.ArriveDateTime AS ArriveDateTime, " +
-                "A2.Name AS DepartureAirportName, A2.airportSign AS DepartureAirportSign, " +
-                "F.DepartureDateTime AS DepartureDateTime, F.Gate AS Gate, F.Terminal AS Terminal, " +
-                "P.Number AS Model " +
-                "FROM airport AS A1 " +
-                "INNER JOIN flight AS F ON A1.Id = F.Arrive " +
-                "INNER JOIN airport AS A2 ON A2.Id = F.Departure " +
-                "INNER JOIN plane as P ON P.Number = F.PlaneId " +
-                "WHERE F.DepartureDateTime >= ? AND F.ArriveDateTime >= ? " +
-                "AND A1.Sign = ? AND A2.Sign = ? " +
-                "ORDER BY F.DepartureDateTime";
+        String sql = "SELECT flight.Id, A1.Name AS ArriveAirportName, A1.airportSign AS ArriveAirportSign, flight.ArriveDateTime, " +
+                "A2.Name AS DepartureAirportName, A2.airportSign AS DepartureAirportSign, flight.DepartureDateTime, flight.Gate, flight.Terminal, " +
+                "P.Model " +
+                "FROM flight " +
+                "INNER JOIN airport A1 ON flight.Arrive = A1.Id " +
+                "INNER JOIN airport A2 ON flight.Departure = A2.Id " +
+                "INNER JOIN plane P ON flight.PlaneId = P.Number " +
+                "WHERE flight.DepartureDateTime >= ? AND flight.ArriveDateTime >= ? AND " +
+                "A1.airportSign = ? AND A2.airportSign = ? " +
+                "ORDER BY flight.DepartureDateTime";
 
-        return jdbc.query(sql, new Object[]{departureDateTime, arriveDateTime, airportDeparture, airportArrive}, new FindFlightRowMapper());
+        List<FlightBuilder> result = jdbc.query(sql, new Object[]{departureDateTime, arriveDateTime, airportDeparture, airportArrive}, new FindFlightRowMapper());
+
+        return result;
     }
 
 
