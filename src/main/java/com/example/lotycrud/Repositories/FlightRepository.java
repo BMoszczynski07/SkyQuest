@@ -1,5 +1,6 @@
 package com.example.lotycrud.Repositories;
 
+import com.example.lotycrud.Builders.FlightBuilder;
 import com.example.lotycrud.Builders.SaveFlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +16,24 @@ public class FlightRepository {
     public FlightRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
+
+    public List<FlightBuilder> findFlight(String departureDateTime, String arriveDateTime, String airportDeparture, String airportArrive) {
+        String sql = "SELECT F.Id AS Id, A1.Name AS ArriveAirportName, A1.airportSign AS ArriveAirportSign, " +
+                "F.ArriveDateTime AS ArriveDateTime, " +
+                "A2.Name AS DepartureAirportName, A2.airportSign AS DepartureAirportSign, " +
+                "F.DepartureDateTime AS DepartureDateTime, F.Gate AS Gate, F.Terminal AS Terminal, " +
+                "P.Number AS Model " +
+                "FROM airport AS A1 " +
+                "INNER JOIN flight AS F ON A1.Id = F.Arrive " +
+                "INNER JOIN airport AS A2 ON A2.Id = F.Departure " +
+                "INNER JOIN plane as P ON P.Number = F.PlaneId " +
+                "WHERE F.DepartureDateTime >= ? AND F.ArriveDateTime >= ? " +
+                "AND A1.Sign = ? AND A2.Sign = ? " +
+                "ORDER BY F.DepartureDateTime";
+
+        return jdbc.query(sql, new Object[]{departureDateTime, arriveDateTime, airportDeparture, airportArrive}, new FindFlightRowMapper());
+    }
+
 
     public List<SaveFlightBuilder> findSavedFlight(int UserId, int FlightId) {
         String sql = "SELECT * FROM savedflights WHERE UserId = ? AND FlightId = ?";

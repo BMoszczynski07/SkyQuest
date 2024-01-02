@@ -1,7 +1,6 @@
 package com.example.lotycrud.Repositories;
 
 import com.example.lotycrud.Builders.SaveFlightBuilder;
-import com.example.lotycrud.Builders.UserBuilder;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
