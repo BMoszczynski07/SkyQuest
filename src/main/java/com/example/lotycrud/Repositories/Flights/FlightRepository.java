@@ -5,6 +5,7 @@ import com.example.lotycrud.Builders.GetFlightBuilder;
 import com.example.lotycrud.Builders.SaveFlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -37,27 +38,31 @@ public class FlightRepository {
     }
 
     public boolean addFlight(FlightBuilder newFlight) {
-            String sql = "INSERT INTO flight (Id," +
-                    "PlaneId," +
-                    "Arrive," +
-                    "ArriveDateTime," +
-                    "Departure," +
-                    "DepartureDateTime," +
-                    "Gate," +
-                    "Terminal) " +
-                    "VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO flight (" +
+                    "`PlaneId`," +
+                    "`Arrive`," +
+                    "`ArriveDateTime`," +
+                    "`Departure`," +
+                    "`DepartureDateTime`," +
+                    "`Gate`," +
+                    "`Terminal`) " +
+                    "VALUES (?,?,?,?,?,?,?)";
 
-            jdbc.update(sql, new Object[]{
-                    newFlight.getPlaneId(),
-                    newFlight.getArrive(),
-                    newFlight.getArriveDateTime(),
-                    newFlight.getDeparture(),
-                    newFlight.getDepartureDateTime(),
-                    newFlight.getGate(),
-                    newFlight.getTerminal(),
-            }, new FlightBuilder());
+        // Implementacja interfejsu PreparedStatementSetter
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setInt(1, newFlight.getPlaneId());
+            preparedStatement.setInt(2, newFlight.getArrive());
+            preparedStatement.setString(3, newFlight.getArriveDateTime());
+            preparedStatement.setInt(4, newFlight.getDeparture());
+            preparedStatement.setString(5, newFlight.getDepartureDateTime());
+            preparedStatement.setInt(6, newFlight.getGate());
+            preparedStatement.setInt(7, newFlight.getTerminal());
+        };
 
-            return true;
+        // Wywołanie jdbc.update() z odpowiednim PreparedStatementSetter
+        jdbc.update(sql, preparedStatementSetter);
+
+        return true;
     }
 
     public List<GetFlightBuilder> findFlight(String departureDateTime, String arriveDateTime, String airportDeparture, String airportArrive, boolean twoWay) {

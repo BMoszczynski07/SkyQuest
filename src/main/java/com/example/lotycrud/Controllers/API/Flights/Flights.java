@@ -23,74 +23,118 @@ public class Flights {
         this.jdbc = jdbc;
     }
 
+    public void insertFlight(int planeId, int flightIdArrive, String arriveDateTime, int flightIdDeparture, String departureDateTime, int gate, int terminal) {
+        FlightBuilder newFlight = new FlightBuilder();
+
+        newFlight.setPlaneId(planeId);
+        newFlight.setArrive(flightIdArrive);
+        newFlight.setArriveDateTime(arriveDateTime);
+        newFlight.setDeparture(flightIdDeparture);
+        newFlight.setDepartureDateTime(departureDateTime);
+        newFlight.setGate(gate);
+        newFlight.setTerminal(terminal);
+
+        jdbc.addFlight(newFlight);
+    }
+
+    public ArrayList<String> getDates() {
+        Random random = new Random();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // Losowanie czasu odlotu 1
+        LocalDateTime startDateTime = LocalDateTime.now();
+
+        int randomDaysForDate1 = random.nextInt(365) + 1;
+
+        LocalDateTime datePlusDaysDeparture1 = startDateTime.plusDays(randomDaysForDate1);
+        String dateDeparture1 = datePlusDaysDeparture1.format(formatter);
+
+        // Losowanie czasu przylotu 1
+        int randomHoursForArrive1 = random.nextInt(5) + 1;
+        int randomMinutesForArrive1 = random.nextInt(30) + 1;
+
+        LocalDateTime datePlusHoursArrive1 = datePlusDaysDeparture1.plusHours(randomHoursForArrive1);
+        LocalDateTime datePlusMinutesArrive1 = datePlusHoursArrive1.plusMinutes(randomMinutesForArrive1);
+        String dateArrive1 = datePlusMinutesArrive1.format(formatter);
+
+        ArrayList<String> dates = new ArrayList<String>();
+
+        // Losowanie czasu odlotu 2
+        int randomDaysForDate2 = randomDaysForDate1 + random.nextInt(365) + 1;
+
+        LocalDateTime datePlusDaysDeparture2 = datePlusMinutesArrive1.plusDays(randomDaysForDate2);
+        String dateDeparture2 = datePlusDaysDeparture2.format(formatter);
+
+        // Losowanie czasu przylotu 2
+        int randomHoursForDeparture2 = random.nextInt(5) + 1;
+        int randomMinutesForDeparture2 = random.nextInt(30) + 1;
+
+        LocalDateTime datePlusHoursArrive2 = datePlusDaysDeparture2.plusHours(randomHoursForDeparture2);
+        LocalDateTime datePlusMinutesArrive2 = datePlusHoursArrive2.plusMinutes(randomMinutesForDeparture2);
+        String dateArrive2 = datePlusMinutesArrive2.format(formatter);
+
+        dates.add(dateDeparture1);
+        dates.add(dateArrive1);
+        dates.add(dateDeparture2);
+        dates.add(dateArrive2);
+
+        return dates;
+    }
+
+
     @PostMapping("/api/add-flights/{flightsQty}")
     public ResponseDTO addFlight(@PathVariable int flightsQty) {
         try {
             for (int i = 0; i < flightsQty; i++) {
+                Random random = new Random();
                 boolean isTwoWay = Math.random() > 0.10;
-
-                FlightBuilder newFlight = new FlightBuilder();
 
                 // TODO: get all planes' id and choose one
                 List<Integer> planesId = jdbc.getPlanesId();
-                int planeId = (int) Math.floor(Math.random() * (planesId.size() - 1 - 0 + 1) + 0);
+
+                int planeId = random.nextInt(planesId.size());
+
+                int selectedPlane = planesId.get(planeId);
+
+//                System.out.println(planesId + "\n" + planeId + "\n" + "nr: " + selectedPlane);
 
                 // all airports' id
                 List<Integer> flightsId = jdbc.getAirportsId();
 
-                // TODO: get all flights' airport and choose one for arrive
-                int randFlightArrive = (int) Math.floor(Math.random() * (flightsId.size() - 1 - 0 + 1) + 0);
-                int flightIdArrive = flightsId.get(randFlightArrive);
-
                 // TODO: get all flights' airport and choose one for departure
-                int randFlightDeparture = (int) Math.floor(Math.random() * (flightsId.size() - 1 - 0 + 1) + 0);
+                int randFlightDeparture = random.nextInt(flightsId.size());
                 int flightIdDeparture = flightsId.get(randFlightDeparture);
 
+                // TODO: get all flights' airport and choose one for arrive
+                int randFlightArrive;
+
+                do {
+                    randFlightArrive = random.nextInt(flightsId.size());
+                } while (randFlightArrive == randFlightDeparture);
+
+                int flightIdArrive = flightsId.get(randFlightArrive);
+
+//                System.out.println(flightsId + "\n" + randFlightArrive + "\n" + "nr: " + flightIdArrive);
+
+//                System.out.println(flightsId + "\n" + randFlightDeparture + "\n" + "nr: " + flightIdDeparture);
+
                 // TODO: random Gate and Terminal
-                int randGate = (int) Math.floor(Math.random() * 71);
-                int randTerminal = (int) Math.floor(Math.random() * 4);
+                int randGate1 = (int) Math.floor(Math.random() * 70) + 1;
+                int randTerminal1 = (int) Math.floor(Math.random() * 5) + 1;
+
+                int randGate2 = (int) Math.floor(Math.random() * 70) + 1;
+                int randTerminal2 = (int) Math.floor(Math.random() * 5) + 1;
 
                 // TODO: randomArriveTime and randomDepartureTime
-                Random random = new Random();
-                LocalDateTime startDateTime = LocalDateTime.now();
+                ArrayList<String> dates = getDates();
 
-                int randomDays = random.nextInt(365) + 1;
+                insertFlight(selectedPlane, flightIdArrive, dates.get(1), flightIdDeparture, dates.get(0), randGate1, randTerminal1);
 
-                int randomHoursForDeparture = random.nextInt(24) + 1;
-                int randomHoursForArrive = random.nextInt(randomHoursForDeparture + 3) + 1;
+                if (isTwoWay) {
+                    insertFlight(selectedPlane, flightIdDeparture, dates.get(3), flightIdArrive, dates.get(2), randGate2, randTerminal2);
+                }
 
-                int randomMinutesForDeparture = random.nextInt(59) + 1;
-                int randomMinutesForArrive = random.nextInt(randomMinutesForDeparture + 59) + 1;
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-                LocalDateTime datePlusDaysDeparture = startDateTime.plusDays(randomDays);
-                LocalDateTime datePlusHoursDeparture = datePlusDaysDeparture.plusHours(randomHoursForDeparture);
-                LocalDateTime datePlusMinutesDeparture = datePlusHoursDeparture.plusMinutes(randomMinutesForDeparture);
-                String dateDeparture = datePlusMinutesDeparture.format(formatter);
-
-                LocalDateTime datePlusDaysArrive = startDateTime.plusDays(randomDays);
-                LocalDateTime datePlusHoursArrive = datePlusDaysArrive.plusHours(randomHoursForArrive);
-                LocalDateTime datePlusMinutesArrive = datePlusHoursArrive.plusMinutes(randomMinutesForArrive);
-                String dateArrive = datePlusMinutesArrive.format(formatter);
-
-                System.out.println(randomDays);
-                System.out.println(randomHoursForDeparture);
-                System.out.println(randomHoursForArrive);
-                System.out.println();
-                System.out.println(randomMinutesForDeparture);
-                System.out.println(randomMinutesForArrive);
-
-                newFlight.setPlaneId(planeId);
-                newFlight.setArrive(flightIdArrive);
-                newFlight.setArriveDateTime(dateArrive.toString());
-                newFlight.setDeparture(flightIdDeparture);
-                newFlight.setDepartureDateTime(dateDeparture.toString());
-                newFlight.setGate(randGate);
-                newFlight.setTerminal(randTerminal);
-
-                System.out.println(dateDeparture);
-                System.out.println(dateArrive);
+                System.out.println("\n");
             }
 
             return new ResponseDTO<String>(200, "Dodano loty");
