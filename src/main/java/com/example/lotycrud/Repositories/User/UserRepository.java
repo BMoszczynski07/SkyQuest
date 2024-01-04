@@ -1,6 +1,5 @@
-package com.example.lotycrud.Repositories;
+package com.example.lotycrud.Repositories.User;
 
-import com.example.lotycrud.Builders.SaveFlightBuilder;
 import com.example.lotycrud.Builders.UserBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

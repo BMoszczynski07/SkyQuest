@@ -1,4 +1,4 @@
-package com.example.lotycrud.Repositories;
+package com.example.lotycrud.Repositories.Flights;
 
 import com.example.lotycrud.Builders.SaveFlightBuilder;
 import org.springframework.jdbc.core.RowMapper;
@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FlightRowMapper implements RowMapper<SaveFlightBuilder> {
+public class SaveFlightRowMapper implements RowMapper<SaveFlightBuilder> {
     @Override
     public SaveFlightBuilder mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         SaveFlightBuilder saveFlightBuilder = new SaveFlightBuilder();

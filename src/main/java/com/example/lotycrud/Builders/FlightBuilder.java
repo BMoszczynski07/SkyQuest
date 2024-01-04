@@ -6,14 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FlightBuilder {
-    private int Id;
-    private String model;
-    private String arriveAirportName;
-    private String arriveAirportSign;
-    private String arriveDateTime;
-    private String departureAirportName;
-    private String departureAirportSign;
-    private String departureDateTime;
-    private int gate;
-    private int terminal;
+    private int PlaneId;
+    private int Arrive;
+    private String ArriveDateTime;
+    private int Departure;
+    private String DepartureDateTime;
+    private int Gate;
+    private int Terminal;
 }

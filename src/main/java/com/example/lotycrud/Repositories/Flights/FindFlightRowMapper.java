@@ -1,15 +1,15 @@
-package com.example.lotycrud.Repositories;
+package com.example.lotycrud.Repositories.Flights;
 
-import com.example.lotycrud.Builders.FlightBuilder;
+import com.example.lotycrud.Builders.GetFlightBuilder;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FindFlightRowMapper implements RowMapper<FlightBuilder> {
+public class FindFlightRowMapper implements RowMapper<GetFlightBuilder> {
     @Override
-    public FlightBuilder mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        FlightBuilder findFlightBuilder = new FlightBuilder();
+    public GetFlightBuilder mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+        GetFlightBuilder findFlightBuilder = new GetFlightBuilder();
 
         findFlightBuilder.setId(resultSet.getInt("Id"));
         findFlightBuilder.setGate(resultSet.getInt("Gate"));

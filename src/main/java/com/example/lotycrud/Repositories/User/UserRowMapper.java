@@ -1,4 +1,4 @@
-package com.example.lotycrud.Repositories;
+package com.example.lotycrud.Repositories.User;
 
 import com.example.lotycrud.Builders.UserBuilder;
 import org.springframework.jdbc.core.RowMapper;

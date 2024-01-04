@@ -4,7 +4,7 @@ import com.example.lotycrud.Builders.UserBuilder;
 import com.example.lotycrud.Models.Response.ResponseDTO;
 import com.example.lotycrud.Models.User.UserDTO;
 import com.example.lotycrud.Models.User.UserDataDTO;
-import com.example.lotycrud.Repositories.UserRepository;
+import com.example.lotycrud.Repositories.User.UserRepository;
 import com.example.lotycrud.Utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
