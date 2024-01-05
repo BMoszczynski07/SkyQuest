@@ -1,18 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:id="@+id/searchFormLayout"
     tools:context=".MainActivity">
 
+    <!-- Krótkie przywitanie -->
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Wyszukiwarka lotów"
+        android:textSize="24sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Obrazek w tle -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/flights"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Formularz wyszukiwania -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layoutContainer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical"-->
+<!--            android:padding="16dp"-->
+<!--            android:visibility="visible">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:onClick="onBackClicked"-->
+<!--                android:text="Powrót do wyszukiwarki" />-->
+
+<!--            &lt;!&ndash; Inne elementy interfejsu użytkownika &ndash;&gt;-->
+
+<!--        </LinearLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/button2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Powrót do wyszukiwarki" />-->
+
+        <EditText
+            android:id="@+id/editTextDeparture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Skąd" />
+
+        <EditText
+            android:id="@+id/editTextArrival"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dokąd" />
+
+        <!-- Opcja "W dwie strony" -->
+        <CheckBox
+            android:id="@+id/checkBoxRoundTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="W dwie strony"
+            android:onClick="onCheckBoxChecked" />
+
+        <!-- Inputy daty odlotu i przylotu -->
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/editTextDepartureDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data przylotu" />
+
+            <EditText
+                android:id="@+id/editTextReturnDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data powrotu"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Przycisk przesyłający formularz -->
+        <Button
+            android:id="@+id/buttonSearchFlights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Szukaj lotów"
+            android:onClick="onSearchFlightsClicked" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
