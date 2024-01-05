@@ -2,10 +2,8 @@ package com.example.loty;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,7 +15,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -30,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,6 +61,54 @@ public class MainActivity extends AppCompatActivity {
             returnDateEditText.setVisibility(View.VISIBLE);
         } else {
             returnDateEditText.setVisibility(View.GONE);
+        }
+    }
+
+    public void generateFlights(View view) {
+        EditText numberOfFlightsEditText = findViewById(R.id.editTextNumber);
+        String numberOfFlightsStr = numberOfFlightsEditText.getText().toString();
+
+        // Sprawdzenie, czy pole nie jest puste
+        if (!numberOfFlightsStr.isEmpty()) {
+            int numberOfFlights = Integer.parseInt(numberOfFlightsStr);
+
+            // Tutaj możesz wykonać żądanie POST do API z liczbą lotów
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            // Utwórz żądanie POST z liczbą lotów jako parametrem
+            String url = "http://192.168.1.42:8000/api/add-flights/" + numberOfFlights; // Zmodyfikuj URL do swojego API
+            JSONObject flightCountJSON = new JSONObject();
+            try {
+                flightCountJSON.put("flightsQty", numberOfFlights);
+                // Dodaj inne dane, jeśli są wymagane
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, flightCountJSON,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // Obsługa odpowiedzi z serwera po wygenerowaniu lotów
+                            Log.d("Response", response.toString());
+                            setContentView(R.layout.activity_main);
+                            // Możesz tutaj dodać logikę obsługi odpowiedzi serwera
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // Obsługa błędu w przypadku niepowodzenia żądania
+                            Log.e("Error", "Błąd żądania: " + error.toString());
+                            setContentView(R.layout.activity_main);
+                        }
+                    });
+
+            // Dodanie żądania do kolejki
+            requestQueue.add(stringRequest);
+        } else {
+            // Komunikat o błędzie gdy pole jest puste
+            Log.e("Error", "Pole liczby lotów jest puste");
         }
     }
 
@@ -128,6 +172,14 @@ public class MainActivity extends AppCompatActivity {
                 TextView textModel4 = flightBox.findViewById(R.id.textArrivalDateTime);
                 textModel4.setText(flightObject.optString("arriveDateTime"));
 
+                // Ustaw informacje o locie w nowym boxie
+                TextView textModel5 = flightBox.findViewById(R.id.textGate);
+                textModel5.setText("Gate: " + flightObject.optInt("gate"));
+
+                // Ustaw informacje o locie w nowym boxie
+                TextView textModel6 = flightBox.findViewById(R.id.textTerminal);
+                textModel6.setText("Gate: " + flightObject.optInt("terminal"));
+
                 if (makePadding) {
                     View line = flightBox.findViewById(R.id.divider);
                     line.setVisibility(View.VISIBLE);
@@ -147,6 +199,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void backToMainPage(View view) {
+        setContentView(R.layout.activity_main);
+    }
+
+    public void getToTheGeneratingLayout(View view) {
+        setContentView(R.layout.generating);
+    }
+
     public void onSearchFlightsClicked(View view) {
         // Pobranie wartości wprowadzonych przez użytkownika
         String departure = departureEditText.getText().toString();
@@ -158,14 +218,11 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println(departure + "\n" + arrive + "\n" + departureDate + "\n" + returnDate);
 
-        // Tutaj możesz wykonać dalsze operacje z pobranymi wartościami formularza
-        // np. wysłanie żądania do serwera w celu wyszukania lotów z danymi parametrami
-
         // Tworzenie kolejki żądań Volley
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
 
-// Adres URL Twojego serwera
+        // ! Adres URL Twojego serwera -> Tu proszę wprowadzić IPv4!
         String url = "http://192.168.1.42:8000/api/get-flights";
 
         JSONObject flightJSON = new JSONObject();

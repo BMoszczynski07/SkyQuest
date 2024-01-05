@@ -107,6 +107,14 @@
             android:text="Szukaj lotów"
             android:onClick="onSearchFlightsClicked" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="getToTheGeneratingLayout"
+            android:text="Generuj loty"
+            />
+
 
     </LinearLayout>
 
